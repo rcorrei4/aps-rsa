@@ -31,10 +31,11 @@ if d < 0:
 	d= d + phi
 
 def encriptar(m):
+	# m^e mod n
 	return pow(m, e) % n
 
 def decriptar(c):
-	# c^d mod n = m
+	# c^d mod n
 	return pow(c, d) % n
 	
 # Mensagem para ser codificada
