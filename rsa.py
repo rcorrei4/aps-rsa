@@ -1,10 +1,12 @@
 def gcd(a, b):
+	# Função para encontrar coprimo de 2 números
 	if b == 0:
 		return a 
 	else: 
 		return gcd(b, a%b) 
 
 def xgcd(e, phi):
+	# Função para encontrar o inverso do E
 	n1 = phi
 	n2 = phi
 	n3 = e
@@ -35,11 +37,13 @@ n = p*q
 # Função ϕ
 phi = (p-1)*(q-1)
 
+# Encontrar um número para o E (deve ser 1 < E < N que é coprimo de N)
 for e in range(2, phi):
 	if gcd(e, phi) == 1:
 		break
 
-d= xgcd(e, phi)
+# Inverso de E
+d = xgcd(e, phi)
 
 def encriptar(m):
 	return pow(m, e) % n
