@@ -1,31 +1,4 @@
-def gcd(a, b):
-	# Função para encontrar coprimo de 2 números
-	if b == 0:
-		return a 
-	else: 
-		return gcd(b, a%b) 
-
-def xgcd(e, phi):
-	# Função para encontrar o inverso do E
-	n1 = phi
-	n2 = phi
-	n3 = e
-	n4 = 1
-	while True:
-		n3_new = (n1//n3)*n3
-		n4_new = (n1//n3)*n4
-
-		if n1-n3_new < 0:
-			n1, n3 = n3, (n1-n3_new)%phi
-		else:
-			n1, n3 = n3, n1-n3_new
-		if n2-n4_new < 0:
-			n2, n4 = n4, (n2-n4_new)%phi
-		else:
-			n2, n4  = n4, n2-n4_new
-		if n3 == 1:
-			break
-	return n4
+from func import *
 
 # Números primos
 p = 191
@@ -53,13 +26,30 @@ def decriptar(c):
 	return pow(c, d) % n
 	
 # Mensagem para ser codificada 
-# (Não pode ser maior que N mas isso não vai acontecer porque ao transformar cada letra na table ASCII não vai passar de 200)
-m = 123
+m = input('Digite a mensagem a ser criptografada: ')
+# Transforma cada letra para o seu número da tabela ASCII
+m = [ord(x) for x in m]
 
-print('Chave pública: ', n, e)
-message_in = encriptar(m)
-print('Mensagem codificada', message_in)
+chave_publica = codificar(str(n)+" "+str(e))
 
-print('Chave privada: ', n, d)
-message_out = decriptar(message_in)
+print('Chave pública: ', chave_publica)
+
+# Criptografa cada letra da mensagem
+mensagem_in = ""
+for i in m:
+	mensagem_in += str(encriptar(i))+" "
+
+# Transforma todos as letras critografadas em uma única string codificada em base64
+mensagem_codificada = codificar(mensagem_in)
+print('Mensagem codificada', mensagem_codificada)
+
+
+chave_privada = codificar(str(n)+" "+str(d))
+print('Chave privada: ', chave_privada)
+
+message = decodificar(mensagem_codificada)
+message_out = ""
+
+for i in message:
+	message_out += chr(decriptar(int(i)))
 print('Mensagem decodificada', message_out)
